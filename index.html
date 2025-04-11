@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/AR.js/aframe/build/aframe-ar.min.js"></script>
+    <!-- Interaction component -->
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/aframe-super-hands-component@4.0.5/dist/aframe-super-hands-component.min.js"></script>
   </head>
   <body style="margin: 0; overflow: hidden;">
     <a-scene
@@ -14,16 +17,25 @@
       renderer="logarithmicDepthBuffer: true;"
     >
       <!-- GPS-based camera -->
-      <a-camera gps-camera rotation-reader></a-camera>
+      <a-camera gps-camera rotation-reader look-controls></a-camera>
 
-      <!-- Phoenix model positioned 10 meters above ground -->
+      <!-- Phoenix model with interaction capabilities -->
       <a-entity
+        id="phoenixModel"
         gps-entity-place="latitude: 4.758620728396945; longitude: 115.00769521944208"
         gltf-model="phoenix_bird.glb"
         position="0 3 0"
         scale="1 1 1"
         rotation="0 180 0"
+        class="interactive"
+        grabbable
+        stretchable
+        draggable
       ></a-entity>
+
+      <!-- Hand controls for drag/scale (mobile-friendly) -->
+      <a-entity laser-controls="hand: right" raycaster="objects: .interactive"></a-entity>
     </a-scene>
   </body>
 </html>
+
