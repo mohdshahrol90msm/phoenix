@@ -5,11 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/AR.js/aframe/build/aframe-ar.min.js"></script>
-    <!-- Interaction component -->
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
     <script src="https://unpkg.com/aframe-super-hands-component@4.0.5/dist/aframe-super-hands-component.min.js"></script>
+    <style>
+      .ui-button {
+        position: fixed;
+        bottom: 20px;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: white;
+        padding: 12px 18px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        margin: 0 10px;
+        z-index: 999;
+      }
+      #scaleUp { left: 20px; }
+      #scaleDown { right: 20px; }
+    </style>
   </head>
   <body style="margin: 0; overflow: hidden;">
+    <!-- UI Buttons -->
+    <button class="ui-button" id="scaleUp">Scale Up 🔼</button>
+    <button class="ui-button" id="scaleDown">Scale Down 🔽</button>
+
     <a-scene
       vr-mode-ui="enabled: false"
       embedded
@@ -19,7 +38,7 @@
       <!-- GPS-based camera -->
       <a-camera gps-camera rotation-reader look-controls></a-camera>
 
-      <!-- Phoenix model with interaction capabilities -->
+      <!-- Phoenix model with interactivity -->
       <a-entity
         id="phoenixModel"
         gps-entity-place="latitude: 4.758620728396945; longitude: 115.00769521944208"
@@ -32,10 +51,23 @@
         stretchable
         draggable
       ></a-entity>
-
-      <!-- Hand controls for drag/scale (mobile-friendly) -->
-      <a-entity laser-controls="hand: right" raycaster="objects: .interactive"></a-entity>
     </a-scene>
+
+    <script>
+      const phoenix = document.getElementById('phoenixModel');
+
+      function changeScale(factor) {
+        const currentScale = phoenix.getAttribute('scale');
+        const newScale = {
+          x: currentScale.x * factor,
+          y: currentScale.y * factor,
+          z: currentScale.z * factor
+        };
+        phoenix.setAttribute('scale', newScale);
+      }
+
+      document.getElementById('scaleUp').addEventListener('click', () => changeScale(1.2));
+      document.getElementById('scaleDown').addEventListener('click', () => changeScale(0.8));
+    </script>
   </body>
 </html>
-
