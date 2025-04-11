@@ -8,10 +8,8 @@
     body {
       margin: 0;
       background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       height: 100vh;
+      overflow: hidden;
     }
     model-viewer {
       width: 100vw;
@@ -20,20 +18,23 @@
   </style>
 </head>
 <body>
-  <model-viewer 
+  <model-viewer
     src="phoenix_bird.glb"
-    ar 
-    ar-modes="scene-viewer webxr quick-look"
-    camera-controls 
-    touch-action="pan-y"
+    ar
+    ar-modes="webxr scene-viewer quick-look"
+    ar-placement="floor"
+    camera-controls
     auto-rotate
     exposure="1"
     shadow-intensity="1"
-    ar-placement="floor"
     environment-image="neutral"
     ios-src="phoenix_bird.glb"
+    interaction-prompt="auto"
     scale="1 1 1"
-    interaction-prompt="auto">
+    min-camera-orbit="auto auto 2m"
+    max-camera-orbit="auto auto 100m"
+    ar-scale="auto"  <!-- enables pinch-scaling -->
+    style="transform: translateY(-3m);">
   </model-viewer>
 </body>
 </html>
